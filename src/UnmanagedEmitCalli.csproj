@@ -1,0 +1,86 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <BuildInfoVSSBE></BuildInfoVSSBE>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net40;net472;netstandard2.0</TargetFrameworks>
+    <RootNamespace>net.r_eg.DotNet.System.Reflection.Emit</RootNamespace>
+    <AssemblyName>UnmanagedEmitCalli</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\com.github.3F.snk</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>UnmanagedEmitCalli</PackageId>
+    <Copyright>Copyright (c) 2019-2021  Denis Kuzmin &lt;x-3F@outlook.com&gt; github/3F</Copyright>
+    <Title>A tiny hack of the System.Private.CoreLib to provide missed Unmanaged EmitCalli implementation at the .NET Standard 2.0 layer.</Title>
+    <Description>A tiny hack of the System.Private.CoreLib to provide missed Unmanaged EmitCalli implementation at the .NET Standard 2.0 layer.
+        
+        Based on Conari version https://github.com/3F/Conari        
+        
+    =======================================
+    gnt /p:ngpackages="UnmanagedEmitCalli/$(Version)"
+    ================== https://github.com/3F/GetNuTool
+
+    Build info:
+
+    $(BuildInfoVSSBE)
+    </Description>
+    <PackageOwners>reg</PackageOwners>
+    <PackageProjectUrl>https://github.com/3F/UnmanagedEmitCalli</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/3F/UnmanagedEmitCalli</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>dotnet CoreLib unmanaged EmitCalli dotnetcore native unmanaged-code unmanaged-function exported-c-function cpp csharp Conari UnmanagedEmitCalli</PackageTags>
+    <PackageReleaseNotes> changelog: https://github.com/3F/UnmanagedEmitCalli/blob/master/changelog.txt </PackageReleaseNotes>
+    <Authors>github.com/3F/UnmanagedEmitCalli</Authors>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <NoWarn>1701;1702;CS1591;IDE1006</NoWarn>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <NoDefaultExcludes>true</NoDefaultExcludes> <!-- NU5119: ..\.version -->
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsNetCoreFamilyTarget>false</IsNetCoreFamilyTarget>
+    <IsNetCoreFamilyTarget Condition="$(TargetFramework.StartsWith('nets')) Or $(TargetFramework.StartsWith('netc'))">true</IsNetCoreFamilyTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' Or '$(Configuration)' == 'PublicRelease' ">
+    <DefineConstants />
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsNetCoreFamilyTarget)' == 'true'">
+    <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
+    <DefineConstants Condition=" '$(TargetFramework)' == 'netstandard2.0' ">$(DefineConstants);NETSTD</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\License.txt" Pack="true" PackagePath="" />
+    <None Include="..\Readme.md" Pack="true" PackagePath="" />
+    <None Include="..\changelog.txt" Pack="true" PackagePath="" />
+    <None Include="..\.version" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\tools\hMSBuild.bat" Pack="true" PackagePath="tools\" />
+    <None Include="..\tools\gnt.bat" Pack="true" PackagePath="tools\" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(IsNetCoreFamilyTarget)' == 'true'">
+    <PackageReference Include="System.Reflection.Emit" Version="4.6.0" />
+  </ItemGroup>
+
+</Project>
