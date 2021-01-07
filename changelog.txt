@@ -2,3 +2,11 @@
 UnmanagedEmitCalli - https://github.com/3F/UnmanagedEmitCalli
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+[v1.1] 2021.01.08
+
+    * Initial independent release.
+      As a tiny hack of the System.Private.CoreLib 
+      to provide missed Unmanaged EmitCalli implementation at the .NET Standard 2.0 layer.
+      
+      Based on Conari 1.4 version https://github.com/3F/Conari
